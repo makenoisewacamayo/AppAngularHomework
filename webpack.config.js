@@ -1,8 +1,14 @@
 const path = require('path');
 const webpack = require('webpack');
+
 const typescript = require('typescript');
 const { AotPlugin } = require('@ngtools/webpack');
 const proxyObj = require('./proxy.conf');
+var autoprefixer = require('autoprefixer');
+
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+var isProd = process.env.NODE_ENV === 'production';
 
 const proxyConf = proxyObj || {};
 
@@ -10,6 +16,7 @@ const rules = [
   { test: /\.html$/, loader: 'html-loader' },
   { test: /\.scss$/, loaders: ['raw-loader', 'sass-loader'] },
   { test: /\.(jpe?g|png|gif|svg)$/i, loader: 'file-loader' },
+  {test: /\.css$/, use: 'css-loader?sourceMap-loader!postcss-loader'},
 ];
 
 const plugins = [
@@ -22,9 +29,18 @@ const plugins = [
     name: 'vendor',
     minChunks: module => module.context && /node_modules/.test(module.context),
   }),
+  new webpack.LoaderOptionsPlugin({
+      minimize: isProd,
+      debug: !isProd,
+      postcss: [
+        autoprefixer({
+          browsers: ['last 2 version']
+        })
+      ]
+  }),
 ];
 
-if (process.env.NODE_ENV === 'production') {
+if (isProd) {
   rules.push({
     test: /\.ts$/,
     loaders: ['@ngtools/webpack'],
@@ -34,10 +50,7 @@ if (process.env.NODE_ENV === 'production') {
       tsConfigPath: './tsconfig.json',
       entryModule: 'src/app/app.module#AppModule',
     }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false,
-    }),
+
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       beautify: false,
@@ -99,9 +112,14 @@ module.exports = {
     publicPath: '/build/',
     port: 4500,
   },
-  devtool: 'sourcemap',
+  devtool : isProd ? 'sourcemap' : 'eval-source-map',
   entry: {
     app: ['zone.js/dist/zone', './src/main.ts'],
+    polyfills : './src/polyfills.ts',
+    vendorStyles : [
+      './node_modules/prismjs/themes/prism.css',
+      './node_modules/bootstrap/dist/css/bootstrap.css'
+    ],
   },
   output: {
     filename: '[name].js',
@@ -120,7 +138,7 @@ module.exports = {
     rules,
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: ['.ts', '.js', '.css', '.scss', '.html'],
     modules: ['src', 'node_modules'],
   },
   plugins,

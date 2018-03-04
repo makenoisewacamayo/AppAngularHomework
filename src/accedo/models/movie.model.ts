@@ -1,14 +1,14 @@
-interface Metadata {
+export interface Metadata {
   value: string;
   name: string;
 }
 
-interface Credit {
+export interface Credit {
   role: string;
   name: string;
 }
 
-interface Content {
+export interface Content {
   url: string;
   format: string;
   width: number;
@@ -19,12 +19,12 @@ interface Content {
   id : string;
 }
 
-interface ParentalRating {
+export interface ParentalRating {
   scheme: string;
   rating: string;
 }
 
-interface Image {
+export interface Image {
   type: string;
   url: string,
   width: number;
@@ -32,7 +32,7 @@ interface Image {
   id: string;
 }
 
-interface Categories {
+export interface Categories {
   title: string;
   description: string;
   id: string;
