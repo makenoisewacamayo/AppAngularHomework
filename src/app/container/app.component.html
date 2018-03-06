@@ -1,6 +1,8 @@
-<!--The content below is only a placeholder and can be replaced.-->
 
-
-<div>
+<mat-toolbar color="accent" class="accedo-toolbar">
+  <button mat-raised-button color="accent" [routerLink]="['/']">HOME</button>
+  <button mat-raised-button color="accent" [routerLink]="['/history']">History</button>
+</mat-toolbar>
+<div class="container">
   <router-outlet></router-outlet>
 </div>

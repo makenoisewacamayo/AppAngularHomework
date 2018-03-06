@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { MaterialExportModule } from './material-export/material-export.module';
 
 import { Routes, RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -30,7 +31,6 @@ import { reducers, CustomSerializer, effects } from './store';
 
 import { AppComponent } from './container/app.component';
 
-
 // routes
 export const ROUTES: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'movies' },
@@ -45,7 +45,7 @@ export const ROUTES: Routes = [
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    NgbModule.forRoot(),
+    MaterialExportModule,
     RouterModule.forRoot(ROUTES),
     StoreModule.forRoot(reducers, {metaReducers}),
     EffectsModule.forRoot(effects),

@@ -16,24 +16,7 @@ const proxyConf = proxyObj || {};
 const rules = [
   { test: /\.html$/, loader: 'html-loader' },
   { test: /\.scss$/, loaders: ['raw-loader', 'sass-loader'] },
-  { test: /\.(jpe?g|png|gif|svg)$/i, loader: 'file-loader' },
-  {
-    test: /\.css$/,
-    exclude: root('src'),
-    use: ExtractTextPlugin.extract({
-      fallback: {
-        loader: 'style-loader',
-        options: {
-          insertAt: 'top'
-        }
-      },
-      use: 'css-loader?sourceMap-loader!postcss-loader'
-    })
-  },
-  {
-    test: /\.css$/,
-    include : root('src'),
-    use: 'css-loader?sourceMap-loader!postcss-loader'},
+  { test: /\.(jpe?g|png|gif|svg)$/i, loader: 'file-loader' }
 ];
 
 const plugins = [
@@ -45,16 +28,6 @@ const plugins = [
   new webpack.optimize.CommonsChunkPlugin({
     name: 'vendor',
     minChunks: module => module.context && /node_modules/.test(module.context),
-  }),
-  new ExtractTextPlugin({filename: 'css/[name].[hash].css', disable: !isProd}),
-  new webpack.LoaderOptionsPlugin({
-      minimize: isProd,
-      debug: !isProd,
-      postcss: [
-        autoprefixer({
-          browsers: ['last 2 version']
-        })
-      ]
   }),
 ];
 
@@ -68,7 +41,15 @@ if (isProd) {
       tsConfigPath: './tsconfig.json',
       entryModule: 'src/app/app.module#AppModule',
     }),
-
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false,
+      postcss: [
+        autoprefixer({
+          browsers: ['last 2 version']
+        })
+      ]
+    }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       beautify: false,
@@ -130,14 +111,9 @@ module.exports = {
     publicPath: '/build/',
     port: 4500,
   },
-  devtool : isProd ? 'sourcemap' : 'eval-source-map',
+  devtool: 'sourcemap',
   entry: {
     app: ['zone.js/dist/zone', './src/main.ts'],
-    polyfills : './src/polyfills.ts',
-    vendorStyles : [
-      './node_modules/prismjs/themes/prism.css',
-      './node_modules/bootstrap/dist/css/bootstrap.css'
-    ],
   },
   output: {
     filename: '[name].js',
@@ -156,15 +132,8 @@ module.exports = {
     rules,
   },
   resolve: {
-    extensions: ['.ts', '.js', '.css', '.scss', '.html'],
+    extensions: ['.ts', '.js'],
     modules: ['src', 'node_modules'],
   },
   plugins,
 };
-
-
-// Helper functions
-function root(args) {
-  args = Array.prototype.slice.call(arguments, 0);
-  return path.join.apply(path, [__dirname].concat(args));
-}
