@@ -20,14 +20,7 @@ export const getSelectedMovie = createSelector(getMoviesEntities, fromRoot.getRo
   return router.state && entities[router.state.params.movieId];
 });
 
-export const getPizzaVisualised = createSelector(getSelectedPizza, fromToppings.getToppingsEntities, fromToppings.getSelectedToppings, (pizza, toppingEntities, selectedToppings) => {
-  const toppings = selectedToppings.map(id => toppingEntities[id]);
-  return {
-    ...pizza,
-    toppings
-  };
-});
 
-export const getPizzaLoaded = createSelector(getPizzaState, fromPizzas.getPizzasLoaded);
+export const getMoviesLoaded = createSelector(getMovieState, fromMovies.getMoviesLoaded);
 
-export const getPizzaLoading = createSelector(getPizzaState, fromPizzas.getPizzasLoading);
+export const getMovieLoading = createSelector(getMovieState, fromMovies.getMoviesLoading);

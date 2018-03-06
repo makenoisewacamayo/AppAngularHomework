@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-import { catchError } from 'rxjs/operators';
+import { catchError, pluck } from 'rxjs/operators';
 import 'rxjs/add/observable/throw';
 
-import { Movie } from '../models/movie.model';
+import {Movie, AccedoResponse} from '../models/movie.model';
 
 @Injectable()
 export class AccedoService {
@@ -13,8 +13,11 @@ export class AccedoService {
 
   getMovies(): Observable<Movie[]> {
     return this.http
-      .get<Movie[]>('/movies')
-      .pipe(catchError((error: any) => Observable.throw(error.json())));
+      .get<AccedoResponse>('/movies')
+      .pipe(
+        pluck('entries'),
+        catchError((error: any) => Observable.throw(error.json()))
+      );
   }
 }
 

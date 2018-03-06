@@ -52,3 +52,8 @@ export interface Movie {
   images: Image[];
   id: string;
 }
+
+export interface AccedoResponse {
+  totalCount: number,
+  entries: Movie[]
+}

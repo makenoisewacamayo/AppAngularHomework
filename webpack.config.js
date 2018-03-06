@@ -7,6 +7,7 @@ const proxyObj = require('./proxy.conf');
 var autoprefixer = require('autoprefixer');
 
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var isProd = process.env.NODE_ENV === 'production';
 
@@ -16,7 +17,23 @@ const rules = [
   { test: /\.html$/, loader: 'html-loader' },
   { test: /\.scss$/, loaders: ['raw-loader', 'sass-loader'] },
   { test: /\.(jpe?g|png|gif|svg)$/i, loader: 'file-loader' },
-  {test: /\.css$/, use: 'css-loader?sourceMap-loader!postcss-loader'},
+  {
+    test: /\.css$/,
+    exclude: root('src'),
+    use: ExtractTextPlugin.extract({
+      fallback: {
+        loader: 'style-loader',
+        options: {
+          insertAt: 'top'
+        }
+      },
+      use: 'css-loader?sourceMap-loader!postcss-loader'
+    })
+  },
+  {
+    test: /\.css$/,
+    include : root('src'),
+    use: 'css-loader?sourceMap-loader!postcss-loader'},
 ];
 
 const plugins = [
@@ -29,6 +46,7 @@ const plugins = [
     name: 'vendor',
     minChunks: module => module.context && /node_modules/.test(module.context),
   }),
+  new ExtractTextPlugin({filename: 'css/[name].[hash].css', disable: !isProd}),
   new webpack.LoaderOptionsPlugin({
       minimize: isProd,
       debug: !isProd,
@@ -143,3 +161,10 @@ module.exports = {
   },
   plugins,
 };
+
+
+// Helper functions
+function root(args) {
+  args = Array.prototype.slice.call(arguments, 0);
+  return path.join.apply(path, [__dirname].concat(args));
+}
