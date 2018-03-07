@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { MaterialExportModule } from '../app/material-export/material-export.module'
+
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 
@@ -33,7 +35,7 @@ export const ROUTES: Routes = [
     component: fromComponents.PlayerComponent
   },
   {
-    path: 'history',
+    path : 'history',
     component: fromComponents.HistoryComponent
   }
 ];
@@ -46,9 +48,11 @@ export const ROUTES: Routes = [
     RouterModule.forChild(ROUTES),
     StoreModule.forFeature('products', reducers),
     EffectsModule.forFeature(effects),
+    MaterialExportModule,
   ],
   providers: [...fromServices.services, ...fromGuards.guards],
   declarations: [ ...fromComponents.components],
+  entryComponents: [fromComponents.SpinnerComponent],
   exports: [ ...fromComponents.components],
 })
 export class AccedoModule {}

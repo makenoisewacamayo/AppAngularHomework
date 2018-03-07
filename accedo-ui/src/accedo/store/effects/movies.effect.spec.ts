@@ -9,6 +9,7 @@ import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
 
 import { AccedoService } from '../../services/accedo.service';
+import { SpinnerService } from '../../services/spinner.service';
 import * as fromEffects from './movies.effect';
 import * as fromActions from '../actions/movies.action';
 import { Movie } from '../../models'
@@ -29,7 +30,8 @@ export function getActions() {
 
 describe('MovieEffect', () => {
   let actions$: TestActions;
-  let service: AccedoService;
+  let accedoApi: AccedoService;
+  let spinner: SpinnerService;
   let effects: fromEffects.MoviesEffects;
 
   const movies: Movie[] = [
@@ -110,16 +112,20 @@ describe('MovieEffect', () => {
       imports: [HttpClientTestingModule],
       providers: [
         AccedoService,
+        SpinnerService,
         fromEffects.MoviesEffects,
         { provide: Actions, useFactory: getActions },
       ],
     });
 
     actions$ = TestBed.get(Actions);
-    service = TestBed.get(AccedoService);
+    accedoApi = TestBed.get(AccedoService);
+    spinner = TestBed.get(SpinnerService);
     effects = TestBed.get(fromEffects.MoviesEffects);
 
-    spyOn(service,'getMovies').and.returnValue(of(movies));
+    spyOn(accedoApi,'getMovies').and.returnValue(of(movies));
+    spyOn(spinner,"openSpinner").and.returnValue(true);
+    spyOn(spinner, "closeSpinner").and.returnValue(true);
   });
 
   describe('loadMovies$', () => {

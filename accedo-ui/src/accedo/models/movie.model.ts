@@ -66,6 +66,22 @@ export interface Movie {
   id: string;
 }
 
+export interface MovieExtended {
+  title : string;
+  description : string;
+  type : string;
+  publishedDate : number;
+  availableDate : number;
+  metadata : Metadata[];
+  contents : Content[];
+  credits?: Credit[];
+  parentalRatings : ParentalRating[];
+  categories?: Categories[];
+  images : Image[];
+  id : string;
+  dateViewed: Date;
+}
+
 export interface AccedoResponse {
   totalCount: number,
   entries: Movie[]

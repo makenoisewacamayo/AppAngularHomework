@@ -1,5 +1,9 @@
 .video_container {
   display: flex;
-  justify-content: center;
-  
+  width: 100;
+  .video-item {
+    justify-content: center;
+    align-items: flex-start;
+    margin: 10px;
+  }
 }

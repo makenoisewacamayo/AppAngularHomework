@@ -38,6 +38,10 @@
 /accedo-ui/e2e/*.js
 /accedo-ui/e2e/*.map
 
+# server in node js
+acceso-server/node_modules
+acceso-server/data/main.db
+
 # System Files
 .DS_Store
 Thumbs.db
