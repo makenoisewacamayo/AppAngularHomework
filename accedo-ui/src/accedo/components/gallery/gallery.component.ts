@@ -22,9 +22,5 @@ export class GalleryComponent implements OnInit {
     this.images$ = this.store.select(fromStore.getCoverImages);
   }
 
-  test(e: Event, ele: any) {
-    console.log("test");
-    console.log(e);
-    console.log(ele);
-  }
+  
 }

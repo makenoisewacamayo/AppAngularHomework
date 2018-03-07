@@ -1,42 +1,42 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist
-/dist-server
-/tmp
-/out-tsc
+/acceso-ui/dist
+/acceso-ui/dist-server
+/acceso-ui/tmp
+/acceso-ui/out-tsc
 
 # dependencies
-/node_modules
+/accedo-ui/node_modules
 
 # IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+/accedo-ui/.idea
+/accedo-ui/.project
+/accedo-ui/.classpath
+/accedo-ui/.c9/
+/accedo-ui/*.launch
+/accedo-ui/.settings/
+/accedo-ui/*.sublime-workspace
 
 # IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+/accedo-ui/.vscode/*
+/accedo-ui/!.vscode/settings.json
+/accedo-ui/!.vscode/tasks.json
+/accedo-ui/!.vscode/launch.json
+/accedo-ui/!.vscode/extensions.json
 
 # misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
-npm-debug.log
-testem.log
-/typings
+/accedo-ui/.sass-cache
+/accedo-ui/connect.lock
+/accedo-ui/coverage
+/accedo-ui/libpeerconnection.log
+/accedo-ui/npm-debug.log
+/accedo-ui/testem.log
+/accedo-ui/typings
 
 # e2e
-/e2e/*.js
-/e2e/*.map
+/accedo-ui/e2e/*.js
+/accedo-ui/e2e/*.map
 
 # System Files
 .DS_Store
