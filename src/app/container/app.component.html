@@ -4,5 +4,9 @@
   <button mat-raised-button color="accent" [routerLink]="['/history']">History</button>
 </mat-toolbar>
 <div class="container">
-  <router-outlet></router-outlet>
+  <mat-card class="container__card">
+    <mat-card-content>
+      <router-outlet></router-outlet>
+    </mat-card-content>
+  </mat-card>
 </div>

@@ -33,12 +33,11 @@ import { AppComponent } from './container/app.component';
 
 // routes
 export const ROUTES: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'movies' },
+  { path: '', pathMatch: 'full', redirectTo: 'accedo' },
   {
-    path: 'movies',
+    path: 'accedo',
     loadChildren: '../accedo/accedo.module#AccedoModule',
-  },
-  { path: '**', redirectTo: 'movies' }
+  }
 ];
 
 @NgModule({

@@ -95,6 +95,7 @@ module.exports = {
   context: __dirname,
   devServer: {
     contentBase: __dirname,
+    clientLogLevel: "info",
     historyApiFallback: true,
     proxy : proxyConf,
     stats: {
@@ -102,7 +103,7 @@ module.exports = {
       chunkModules: false,
       chunkOrigins: false,
       errors: true,
-      errorDetails: false,
+      errorDetails: true,
       hash: false,
       timings: false,
       modules: false,

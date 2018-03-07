@@ -1,3 +1,30 @@
-<p>
-  gallery works!
-</p>
+
+  <div class=".container-gallery">
+    <div
+      carrousel
+      [width]="90"
+      [items]="images$ | async"
+      [$item]="itemTemplate"
+      [$prev]="prevTemplate"
+      [$next]="nextTemplate"
+      class="wrapper"
+    >
+    </div>
+  </div>
+  <ng-template #prevTemplate>
+    <img src="/assets/images/arrow.png" width="30" height="30" class="controls prev"/>
+  </ng-template>
+  <ng-template #nextTemplate>
+    <img src="/assets/images/arrow.png" width="30" height="30" class="controls next"/>
+  </ng-template>
+  <ng-template let-item let-i="index" let-selectedIndex="selectedIndex" #itemTemplate>
+    <a routerLink="{{item.id}}" class="item-link" *ngIf="!!item.src">
+      <div class="item" >
+        <div>
+            <img [src]="item.src" [width]="item.width" [height]="item.height" [alt]="item.alt" importance="high"/>
+            <span class="item-title" >{{item.title}}</span>
+            <br>
+        </div>
+      </div>
+    </a>
+  </ng-template>

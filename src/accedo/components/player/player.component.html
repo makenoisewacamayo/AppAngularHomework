@@ -1,3 +1,7 @@
-<p>
-  player works!
-</p>
+<div class="video_container">
+<div *ngFor="let video of (movie$ | async).contents; let i = index" >
+<video width="{{video.width}}" height="{{video.height}}" controls>
+  <source src="{{video.url}}" type="video/{{video.format}}">
+</video>
+</div>
+</div>

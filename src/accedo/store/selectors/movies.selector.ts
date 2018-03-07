@@ -4,7 +4,7 @@ import * as fromRoot from '../../../app/store';
 import * as fromFeature from '../reducers';
 import * as fromMovies from '../reducers/movies.reducer';
 
-import { Movie } from '../../models';
+import { Movie, Image, CoverImage } from '../../models';
 
 export const getMovieState = createSelector(fromFeature.getProductsState, (state : fromFeature.ProductsState) => state.movies);
 
@@ -14,6 +14,25 @@ export const getAllMovies = createSelector(getMoviesEntities, (entities) => {
   return Object
     .keys(entities)
     .map(id => entities[id]);
+});
+
+
+export const getCoverImages = createSelector(getAllMovies, (movies: Movie[]) => {
+    return movies.map( (movie: Movie) => {
+      const coverImages: CoverImage[] = movie.images
+        .map( (image: Image) => {
+          return {
+            src: image.url,
+            height: `${image.height}`,
+            width : `${image.width}`,
+            alt: movie.description,
+            title: movie.title,
+            type: image.type,
+            id: movie.id
+          } as CoverImage;
+        })
+      return coverImages[0];
+    });
 });
 
 export const getSelectedMovie = createSelector(getMoviesEntities, fromRoot.getRouterState, (entities, router) : Movie => {

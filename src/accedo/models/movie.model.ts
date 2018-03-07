@@ -32,6 +32,19 @@ export interface Image {
   id: string;
 }
 
+export interface CoverImage {
+  type : string;
+  src : string,
+  width : string;
+  height : string;
+  alt: string;
+  title: string;
+  id: string;
+  crossorigin?: string;
+  decoding?: string;
+  referrerpolicy?: string;
+}
+
 export interface Categories {
   title: string;
   description: string;

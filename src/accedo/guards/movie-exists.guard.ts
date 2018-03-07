@@ -12,13 +12,13 @@ import { Movie } from '../models';
 
 @Injectable()
 export class MovieExistsGuard implements CanActivate {
-  constructor(private store : Store < fromStore.ProductsState >) {}
+  constructor(private store: Store<fromStore.ProductsState>) {}
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
     return this.checkStore()
       .pipe(
         switchMap(() => {
-          const id = route.params.pizzaId;
+          const id = route.params.movieId;
           return this.hasMovie(id);
         })
       );
