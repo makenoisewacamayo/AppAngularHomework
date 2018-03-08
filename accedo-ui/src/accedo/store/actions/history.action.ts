@@ -20,7 +20,7 @@ export class LoadHistorySuccess implements Action {
   constructor(public payload : Movie[]) {}
 }
 
-// create pizza
+// create history
 export const CREATE_HISTORY = '[Historic API] Create Hystory entry';
 export const CREATE_HISTORY_FAIL = '[Historic API] Create Hystory entry Fail';
 export const CREATE_HISTORY_SUCCESS = '[Historic API] Create Hystory entry Success';

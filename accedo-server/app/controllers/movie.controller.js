@@ -1,9 +1,11 @@
 var Movie = require('../models/movie.model');
 
 exports.create = function(req, res) {
-    if(!req.body.content) {
+    console.log(JSON.stringify(req.body, null, 2));
+    if(!req.body.id) {
         return res.status(400).send({message: "Movie can not be empty"});
     }
+    console.log(JSON.stringify(req.body, null, 2));
 
     var movie = new Movie(req.body);
 

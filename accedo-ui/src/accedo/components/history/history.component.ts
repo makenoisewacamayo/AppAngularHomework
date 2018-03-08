@@ -18,6 +18,7 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 
 export class HistoryComponent implements OnInit {
   history$: Observable<Movie[]>;
+  error$ : Observable<boolean>;
 
   displayedColumns = [ 'name', 'dateViewed'];
   dataSource: MatTableDataSource<Movie>;
@@ -28,9 +29,9 @@ export class HistoryComponent implements OnInit {
 
   ngOnInit() {
     this.history$ = this.store.select(fromStore.getAllHistory);
-    this.history$.subscribe( (movies) => {
-      this.dataSource = new MatTableDataSource<Movie>(movies)
-    })
+    this.history$.subscribe(
+      (movies) => { this.dataSource = new MatTableDataSource<Movie>(movies); }
+    )
   }
 
   ngAfterViewInit() {

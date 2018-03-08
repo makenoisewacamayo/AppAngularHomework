@@ -5,12 +5,14 @@ export interface HistoryState {
   entities : {
     [id : string]: Movie
   };
+  error: any,
   loaded : boolean;
   loading : boolean;
 };
 
 export const initialState: HistoryState = {
   entities: {},
+  error: null,
   loaded: false,
   loading: false
 }
@@ -43,13 +45,17 @@ export function reducer(state = initialState, action : fromHistory.HistoryAction
           ...state,
           loading: false,
           loaded: true,
+          error: null,
           entities
         };
       }
+    case fromHistory.CREATE_HISTORY_FAIL:
     case fromHistory.LOAD_HISTORY_FAIL:
       {
+        const error = action.payload;
         return {
           ...state,
+          error: error,
           loading: false,
           loaded: false
         };
@@ -62,6 +68,7 @@ export function reducer(state = initialState, action : fromHistory.HistoryAction
       }
       return {
         ...state,
+        error: null,
         entities,
       }
     }
@@ -73,3 +80,4 @@ export function reducer(state = initialState, action : fromHistory.HistoryAction
 export const getHistoryLoading = (state : HistoryState) => state.loading;
 export const getHistoryLoaded = (state : HistoryState) => state.loaded;
 export const getHistoryEntities = (state : HistoryState) => state.entities;
+export const getHistoryError = (state: HistoryState) => state.error;

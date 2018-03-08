@@ -6,7 +6,9 @@ import * as fromHistory from '../reducers/history.reducer';
 
 import { Movie } from '../../models';
 
-export const getHistoryState = createSelector(fromFeature.getProductsState, (state : fromFeature.ProductsState) => state.movies);
+export const getHistoryState = createSelector(fromFeature.getProductsState, (state : fromFeature.ProductsState) => state.history  );
+
+export const getHistoryFail = createSelector(getHistoryState, fromHistory.getHistoryError)
 
 export const getHistoryEntities = createSelector(getHistoryState, fromHistory.getHistoryEntities);
 

@@ -21,16 +21,10 @@ export class HistoryEffects {
   @Effect()
   loadHistory$ = this.actions$.ofType(historyActions.LOAD_HISTORY)
     .pipe(
-      tap(() => {
-          this.spinnerService.openSpinner();
-      }),
       switchMap( () => {
         return this.historyService
         .getHistory()
         .pipe(
-          tap(() => {
-            this.spinnerService.closeSpinner();
-          }),
           map(movies => new historyActions.LoadHistorySuccess(movies)),
           catchError(error => of(new historyActions.LoadHistoryFail(error)))
         );
