@@ -99,7 +99,7 @@ describe('MovieReducer', () => {
         "id": "10-things-i-hate-about-you"
       }];
       const entities = {
-        1: movies[0],
+        "10-things-i-hate-about-you" : movies[0],
       };
       const {initialState} = fromMovies;
       const action = new fromActions.LoadMoviesSuccess(movies);
@@ -135,8 +135,8 @@ describe('MovieReducer', () => {
 
 });
 
-describe('PizzasReducer Selectors', () => {
-  describe('getPizzaEntities', () => {
+describe('MovieReducer Selectors', () => {
+  describe('getMoviesEntities', () => {
     it('should return .entities', () => {
       const entities : {
         [key : string] : Movie
@@ -225,7 +225,7 @@ describe('PizzasReducer Selectors', () => {
     });
   });
 
-  describe('getPizzasLoading', () => {
+  describe('getMoviesLoading', () => {
     it('should return .loading', () => {
       const {initialState} = fromMovies;
       const previousState = {
@@ -238,7 +238,7 @@ describe('PizzasReducer Selectors', () => {
     });
   });
 
-  describe('getPizzasLoaded', () => {
+  describe('getMoviesLoaded', () => {
     it('should return .loaded', () => {
       const {initialState} = fromMovies;
       const previousState = {

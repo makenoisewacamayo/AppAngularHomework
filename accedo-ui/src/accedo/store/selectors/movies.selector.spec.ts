@@ -2,7 +2,7 @@ import { StoreModule, Store, combineReducers } from '@ngrx/store';
 import { ROUTER_NAVIGATION } from '@ngrx/router-store';
 
 import { TestBed } from '@angular/core/testing';
-import { Movie } from '../../models';
+import { Movie, CoverImage, Image } from '../../models';
 
 import * as fromRoot from '../../../app/store';
 import * as fromReducers from '../reducers/index';
@@ -248,6 +248,24 @@ describe('Movies Selectors', () => {
     "2-guns" : movies[2],
   };
 
+  const coverImages: CoverImage[] = movies
+    .map( (movie: Movie) => {
+      const images: CoverImage[] = movie.images
+        .map( (image: Image) => {
+            return {
+              src: image.url,
+              height: `${image.height}`,
+              width: `${image.width}`,
+              alt: movie.description,
+              title: movie.title,
+              type: image.type,
+              id: movie.id
+            } as CoverImage;
+        });
+      return images[0];
+    })
+
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -301,8 +319,23 @@ describe('Movies Selectors', () => {
     });
   });
 
+  describe('getCoverImages', () => {
+    it('should return an array of CoverImages', () => {
+      let result;
+
+      store.dispatch(new fromActions.LoadMoviesSuccess(movies));
+
+      store
+        .select(fromSelectors.getCoverImages)
+        .subscribe(coverImgs => (result = coverImgs));
+
+      expect(result).toEqual(coverImages);
+
+    });
+  });
+
   describe('getSelectedMovie', () => {
-    it('should return selected pizza as an entity', () => {
+    it('should return selected movie as an entity', () => {
       let result;
       let params;
 
@@ -312,7 +345,7 @@ describe('Movies Selectors', () => {
         type: 'ROUTER_NAVIGATION',
         payload: {
           routerState: {
-            url: '/movies',
+            url: '/accedo',
             queryParams: {},
             params: { movieId: "12-years-a-slave" },
           },
@@ -324,13 +357,13 @@ describe('Movies Selectors', () => {
         .select(fromRoot.getRouterState)
         .subscribe(routerState => (params = routerState.state.params));
 
-      expect(params).toEqual({ movieId: '2' });
+      expect(params).toEqual({movieId: '12-years-a-slave'});
 
       store
         .select(fromSelectors.getSelectedMovie)
         .subscribe(selectedMovie => (result = selectedMovie));
 
-      expect(result).toEqual("12-years-a-slave");
+      expect(result).toEqual(movie2);
     });
   });
 

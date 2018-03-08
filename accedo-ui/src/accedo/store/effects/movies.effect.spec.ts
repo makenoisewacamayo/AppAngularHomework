@@ -2,6 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { Actions } from '@ngrx/effects';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 import { hot, cold } from 'jasmine-marbles';
 import { Observable } from 'rxjs/Observable';
@@ -24,6 +25,15 @@ export class TestActions extends Actions {
   }
 }
 
+export class MtDialogMock {
+  open() {
+    return {};
+  }
+  close() {
+    return true;
+  }
+}
+
 export function getActions() {
   return new TestActions();
 }
@@ -33,6 +43,7 @@ describe('MovieEffect', () => {
   let accedoApi: AccedoService;
   let spinner: SpinnerService;
   let effects: fromEffects.MoviesEffects;
+  const fakeMatDialog = MatDialog
 
   const movies: Movie[] = [
         {
@@ -113,6 +124,7 @@ describe('MovieEffect', () => {
       providers: [
         AccedoService,
         SpinnerService,
+        { provide: MatDialog, useFactory: MtDialogMock},
         fromEffects.MoviesEffects,
         { provide: Actions, useFactory: getActions },
       ],
@@ -129,7 +141,7 @@ describe('MovieEffect', () => {
   });
 
   describe('loadMovies$', () => {
-    it('should return a collection from LoadPizzasSuccess', () => {
+    it('should return a collection from LoadMoviesSuccess', () => {
       const action = new fromActions.LoadMovies();
       const completion = new fromActions.LoadMoviesSuccess(movies);
 
