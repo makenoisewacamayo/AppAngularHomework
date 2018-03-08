@@ -75,7 +75,8 @@ const dummyMovies: Movie[] = [
       "id": "movies-romance"
     }
   ],
-  "id": "10-things-i-hate-about-you"
+  "id": "10-things-i-hate-about-you",
+  "dateViewed" : new Date("2017-11-08T21:54:32.330Z"),
   }
 ]
 
@@ -99,7 +100,7 @@ describe('History Service', () => {
     httpMock.verify();
   });
 
-  it('get history should return an Observable<Movie[]>', () => {
+it('get history should return an Observable<Movie[]>', () => {
     service.getHistory().subscribe( movies => {
       expect(movies.length).toEqual(1);
       expect(movies).toEqual(dummyMovies);
@@ -109,7 +110,7 @@ describe('History Service', () => {
     req.flush(dummyMovies);
   });
 
-  it('create history should return an Observable<Movie>', () => {
+it('create history should return an Observable<Movie>', () => {
     const payload: Movie = dummyMovies[0];
     service.createHistory(payload).subscribe( movie => {
       expect(movie).toEqual(dummyMovies[0]);
@@ -119,7 +120,7 @@ describe('History Service', () => {
     req.flush(dummyMovies[0]);
   });
 
-  it('update history should return an Observable<Movie>', () => {
+it('update history should return an Observable<Movie>', () => {
     const payload: Movie = dummyMovies[0];
     service.updateHistory(payload).subscribe( movie => {
       expect(movie).toEqual(dummyMovies[0]);
@@ -130,7 +131,7 @@ describe('History Service', () => {
   });
 
   it('remove history should return an Observable<any>', () => {
-    const payload: Movie = dummyMovies[0];
+      const payload: Movie = dummyMovies[0];
     service.removeHistory(payload).subscribe( remove => {
       expect(remove).toEqual({text: `remove item ${payload.id}`});
     })

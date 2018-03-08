@@ -8,6 +8,7 @@
 
 # dependencies
 /accedo-ui/node_modules
+/accedo-server/node_modules
 
 # IDEs and editors
 /accedo-ui/.idea
@@ -18,12 +19,28 @@
 /accedo-ui/.settings/
 /accedo-ui/*.sublime-workspace
 
+/accedo-server/.idea
+/accedo-server/.project
+/accedo-server/.classpath
+/accedo-server/.c9/
+/accedo-server/*.launch
+/accedo-server/.settings/
+/accedo-server/*.sublime-workspace
+
+
 # IDE - VSCode
 /accedo-ui/.vscode/*
 /accedo-ui/!.vscode/settings.json
 /accedo-ui/!.vscode/tasks.json
 /accedo-ui/!.vscode/launch.json
 /accedo-ui/!.vscode/extensions.json
+
+/accedo-server/.vscode/*
+/accedo-server/!.vscode/settings.json
+/accedo-server/!.vscode/tasks.json
+/accedo-server/!.vscode/launch.json
+/accedo-server/!.vscode/extensions.json
+
 
 # misc
 /accedo-ui/.sass-cache
@@ -34,13 +51,12 @@
 /accedo-ui/testem.log
 /accedo-ui/typings
 
+/accedo-server/npm-debug.log
+
 # e2e
 /accedo-ui/e2e/*.js
 /accedo-ui/e2e/*.map
 
-# server in node js
-acceso-server/node_modules
-acceso-server/data/main.db
 
 # System Files
 .DS_Store

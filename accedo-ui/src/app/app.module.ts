@@ -6,6 +6,8 @@ import { MaterialExportModule } from './material-export/material-export.module';
 import { Routes, RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import "hammerjs";
+
 import {
   StoreRouterConnectingModule,
   RouterStateSerializer

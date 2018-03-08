@@ -22,5 +22,4 @@ export class GalleryComponent implements OnInit {
     this.images$ = this.store.select(fromStore.getCoverImages);
   }
 
-  
 }

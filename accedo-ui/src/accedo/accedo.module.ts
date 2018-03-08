@@ -28,16 +28,18 @@ export const ROUTES: Routes = [
     component: fromComponents.GalleryComponent,
   },
   {
+    path: 'history',
+    canActivate: [fromGuards.HistoryGuard],
+    component: fromComponents.HistoryComponent
+  },
+  {
     path: ':movieId',
     canActivate: [
       fromGuards.MovieExistsGuard
     ],
     component: fromComponents.PlayerComponent
   },
-  {
-    path : 'history',
-    component: fromComponents.HistoryComponent
-  }
+
 ];
 
 @NgModule({

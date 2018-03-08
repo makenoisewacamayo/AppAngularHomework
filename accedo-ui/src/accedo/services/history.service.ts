@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { catchError } from 'rxjs/operators';
 import 'rxjs/add/observable/throw';
 
-import {Movie} from '../models/movie.model';
+import { Movie} from '../models/movie.model';
 
 @Injectable()
 export class HistoryService {
