@@ -49,7 +49,7 @@ docker rmi --force $(docker images -q)
 ```bash
 cd accedo-server && npm start
 ```
-[Detail Instruction here](accedo-server/README.md)
+[Detail Instruction here](accedo-server/Readme.md)
 
 
 # To run the accedo-ui
