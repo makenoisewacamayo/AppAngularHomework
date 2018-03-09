@@ -1,7 +1,10 @@
 <div class="video_container">
-<div *ngFor="let video of (movie$ | async).contents; let i = index" class="video-item">
-  <video width="{{video.width}}" height="{{video.height}}" controls>
-    <source src="{{video.url}}" type="video/{{video.format}}">
+<div  class="video-item" *ngIf="content$ | async as content; else loading" >
+  <video width="{{content.width}}" height="{{content.height}}" controls (play)="onPlay($event)">
+    <source src="{{content.url}}" type="video/{{content.format}}">
   </video>
 </div>
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate" class="video-loader"></mat-progress-bar>
+</ng-template>
 </div>

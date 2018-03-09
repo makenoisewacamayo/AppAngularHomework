@@ -135,13 +135,13 @@ describe('MovieEffect', () => {
     spinner = TestBed.get(SpinnerService);
     effects = TestBed.get(fromEffects.MoviesEffects);
 
-    spyOn(accedoApi,'getMovies').and.returnValue(of(movies));
     spyOn(spinner,"openSpinner").and.returnValue(true);
     spyOn(spinner, "closeSpinner").and.returnValue(true);
   });
 
   describe('loadMovies$', () => {
     it('should return a collection from LoadMoviesSuccess', () => {
+      spyOn(accedoApi,'getMovies').and.returnValue(of(movies));
       const action = new fromActions.LoadMovies();
       const completion = new fromActions.LoadMoviesSuccess(movies);
 
@@ -150,6 +150,19 @@ describe('MovieEffect', () => {
 
       expect(effects.loadMovies$).toBeObservable(expected);
     });
+
+    it('should return an error on fail to retrieve movies', () => {
+      const error = new Error("Error");
+      spyOn(accedoApi,'getMovies').and.returnValue(Observable.throw(error));
+      const action = new fromActions.LoadMovies();
+      const completion = new fromActions.LoadMoviesFail(error);
+
+      actions$.stream = hot('-a', {a: action});
+      const expected = cold('-b', {b: completion});
+
+      expect(effects.loadMovies$).toBeObservable(expected);
+    });
+
   });
 
 });

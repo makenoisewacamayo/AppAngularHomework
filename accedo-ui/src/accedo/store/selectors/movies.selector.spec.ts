@@ -367,6 +367,42 @@ describe('Movies Selectors', () => {
     });
   });
 
+
+  describe('getSelectedContent', () => {
+    it('should return selected content as a Content Object', () => {
+      let result;
+      let params;
+
+      store.dispatch(new fromActions.LoadMoviesSuccess(movies));
+
+      store.dispatch({
+        type: 'ROUTER_NAVIGATION',
+        payload: {
+          routerState: {
+            url: '/accedo',
+            queryParams: {},
+            params: { movieId: "12-years-a-slave" },
+          },
+          event: {},
+        },
+      });
+
+      store
+        .select(fromRoot.getRouterState)
+        .subscribe(routerState => (params = routerState.state.params));
+
+      expect(params).toEqual({movieId: '12-years-a-slave'});
+
+      store
+        .select(fromSelectors.getSelectedContent)
+        .subscribe(selectedContent => (result = selectedContent));
+
+      expect(result).toEqual(movie2.contents[0]);
+
+    });
+
+  })
+
   describe('getAllMovies', () => {
     it('should return movies as an array', () => {
       let result;
