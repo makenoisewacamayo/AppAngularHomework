@@ -13,11 +13,11 @@ var credit = new Schema({
 });
 
 
-var content = new Schema({
-    url: String,
-    format: String,
-    width: Number,
-    height: Number,
+var Content = new Schema({
+    url: { type: String, required: true },
+    format: { type: String, required: true },
+    width: { type: Number, required: true },
+    height: { type: Number, required: true },
     language: String,
     duration: Number,
     geoLock : Boolean,
@@ -31,11 +31,11 @@ var parentalRating = new Schema({
 });
 
 
-var image = new Schema({
+var Image = new Schema({
     type: String,
-    url: String,
-    width: Number,
-    height: Number,
+    url: { type: String, required: true },
+    width: { type: Number, required: true },
+    height: { type: Number, required: true },
     id: String
 });
 
@@ -61,21 +61,6 @@ var category = new Schema({
 });
 
 
-var Movie = new Schema({
-    title: {type: String, required: true},
-    description: {type: String, required: true},
-    type: String,
-    publishedDate: Number,
-    availableDate: Number,
-    metadata : [metaData],
-    contents : [content],
-    credits: [credit],
-    parentalRatings: [parentalRating],
-    categories : [category],
-    images : [image],
-    id: {type: String, required: true}
-});
-
 
 var MovieExtended = new Schema({
     title: { type: String, required: true },
@@ -84,14 +69,14 @@ var MovieExtended = new Schema({
     publishedDate: Number,
     availableDate: Number,
     metadata : [metaData],
-    contents : [content],
+    contents : [{type: Content, required:true}],
     credits: [credit],
     parentalRatings: [parentalRating],
     categories : [category],
-    images : [image],
-    id: {type: String, required: true},
+    images : [{type: Image, required:true}],
+    id: {type: String, required: true, index: true},
     dateViewed: { type: Date, default: Date.now}
-});
+}, { useNestedStrict: true});
 
 
 

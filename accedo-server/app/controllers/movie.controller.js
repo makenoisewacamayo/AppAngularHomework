@@ -33,7 +33,7 @@ exports.findOne = async function (req, res) {
     const id = req.params.movieId;
     let movie;
     try {
-       movie = await Movie.findOne({'id': id});
+       movie = await Movie.findOne({'id': id}).exec();
        res.send(movie);
     }
     catch (error) {
@@ -51,7 +51,7 @@ exports.update = async function (req, res) {
     }
     let movie;
     try {
-       movie = await Movie.findOne({'id': id});
+       movie = await Movie.findOne({'id': id}).exec();
     } catch(error) {
         if (error.kind === 'ObjectId') {
           return  res.status(404).send({message: `Movie not found with id: ${id}`});
@@ -77,7 +77,7 @@ exports.update = async function (req, res) {
 
 };
 
-exports.delete = function (req, res) {
+exports.delete = async function (req, res) {
     const id = req.body.id;
     if(!id) {
         return res.status(400).send({message: "Movie Id cannot be empty"});

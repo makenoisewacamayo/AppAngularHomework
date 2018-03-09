@@ -41,3 +41,27 @@ to remove any docker image should use
 ```bash
 docker rmi --force $(docker images -q)
 ```
+
+# To run the accedo-server
+
+* Run first the docker instance
+* Go to
+```bash
+cd accedo-server && npm start
+```
+[Detail Instruction here](accedo-server/README.md)
+
+
+# To run the accedo-ui
+
+* be sure than accedo-server is up an running
+
+* Go to
+
+```bash
+cd accedo-ui && npm start
+```
+
+[Detail Instruction here](accedo-ui/README.md)
+
+
