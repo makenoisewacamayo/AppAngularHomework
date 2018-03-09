@@ -85,7 +85,7 @@ exports.delete = function (req, res) {
 
     let response;
     try {
-        response = Movie.findOneAndRemove({'id': id});
+        response = await Movie.findOneAndRemove({'id': id});
         res.send({message: "Movie deleted successfully!"})
     } catch(error) {
         if (error.kind === 'ObjectId') {
