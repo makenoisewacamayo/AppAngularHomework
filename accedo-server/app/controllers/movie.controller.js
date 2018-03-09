@@ -1,94 +1,102 @@
 var Movie = require('../models/movie.model');
 
-exports.create = function(req, res) {
-    console.log(JSON.stringify(req.body, null, 2));
-    if(!req.body.id) {
-        return res.status(400).send({message: "Movie can not be empty"});
+function newMovie (body) {
+    return new Promise((resolve)=>{
+        resolve(new Movie(body));
+    })
+} 
+
+exports.create = async function (req, res) {
+    const id = req.body.id;
+    if(!id) {
+        return res.status(400).send({message: "Movie Id cannot be empty"});
     }
-    console.log(JSON.stringify(req.body, null, 2));
+    
+    var movie = await newMovie(req.body);
 
-    var movie = new Movie(req.body);
-
-    movie.save(function(err, data) {
-        if(err) {
-            console.log(err);
-            res.status(500).send({message: "Some error occurred while creating the Movie."});
-        } else {
-            res.send(data);
-        }
-    });
+    let data;
+    try {
+        data = await movie.save();
+        res.send(data);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({message: "Some error occurred while creating the Movie."})
+    }
 };
 
-exports.findAll = function(req, res) {
-    Movie.find(function(err, movies){
-        if(err) {
-            console.log(err);
-            res.status(500).send({message: "Some error occurred while retrieving movies."});
-        } else {
-            res.send(movies);
+exports.findAll = async function (req, res) {
+   let movies;
+   try {
+      movies = await Movie.find();
+      res.send(movies);
+   } catch(err) {
+     res.status(500).send({message: "Some error occurred while retrieving movies."});
+   }
+ };
+
+exports.findOne = async function (req, res) {
+    const id = req.params.movieId;
+    let movie;
+    try {
+       movie = await Movie.findOne({'id': id});
+       res.send(movie);
+    }
+    catch (error) {
+        if (error.kind === 'ObjectId') {
+          return  res.status(404).send({message: `Movie not found with id: ${id}`});
         }
-    });
+        res.status(500).send({message: `Error retrieving movie with id: ${id}`});
+    }
 };
 
-exports.findOne = function(req, res) {
-    Movie.findOne({'id': req.params.movieId}, function(err, movie) {
-        if(err) {
-            console.log(err);
-            if(err.kind === 'ObjectId') {
-                return res.status(404).send({message: "Movie not found with id " + req.params.movieId});                
-            }
-            return res.status(500).send({message: "Error retrieving movie with id " + req.params.movieId});
-        } 
-
-        if(!movie) {
-            return res.status(404).send({message: "Movie not found with id " + req.params.movieId});            
+exports.update = async function (req, res) {
+    const id = req.body.id;
+    if(!id) {
+        return res.status(400).send({message: "Movie Id cannot be empty"});
+    }
+    let movie;
+    try {
+       movie = await Movie.findOne({'id': id});
+    } catch(error) {
+        if (error.kind === 'ObjectId') {
+          return  res.status(404).send({message: `Movie not found with id: ${id}`});
         }
+        return res.status(500).send({message: `Error retrieving movie with id: ${id}`});
+    }
 
-        res.send(movie);
-    });
+    Object.keys(req.body)
+        .map((key) => {
+            if ( movie.hasOwnProperty(key) && movie[key] !==  req.body[key]) {
+                movie[key] = req.body[key]
+            }
+            return key;
+        }); 
+
+    let data;
+    try {
+        data = await movie.save();
+        es.send(data);
+    } catch(error) {
+        res.status(500).send({message: `Could not update movie with id: ${id}`});
+    }
+
 };
 
-exports.update = function(req, res) {
-    Movie.findOne({'id': req.params.movieId}, function(err, movie) {
-        if(err) {
-            console.log(err);
-            if(err.kind === 'ObjectId') {
-                return res.status(404).send({message: "Mvie not found with id " + req.params.movieId});                
-            }
+exports.delete = function (req, res) {
+    const id = req.body.id;
+    if(!id) {
+        return res.status(400).send({message: "Movie Id cannot be empty"});
+    }
 
-            return res.status(500).send({message: "Error finding movie with id " + req.params.movieId});
-        }
-
-        if(!movie) {
-            return res.status(404).send({message: "Movie not found with id " + req.params.movieId});            
-        }
-
-        movie = req.body;
-      
-        movie.save(function(err, data){
-            if(err) {
-                res.status(500).send({message: "Could not update movie with id " + req.params.movieId});
-            } else {
-                res.send(data);
-            }
-        });
-    });
-};
-
-exports.delete = function(req, res) {
-    Movie.findOneAndRemove({ 'id': req.params.movieId}, function(err, movie) {
-        if(err) {
-            console.log(err);
-            if(err.kind === 'ObjectId') {
-                return res.status(404).send({message: "Movie not found with id " + req.params.movieId});                
-            }
-            return res.status(500).send({message: "Could not delete movie with id " + req.params.movieId});
-        }
-
-        if(!movie) {
-            return res.status(404).send({message: "Movie not found with id " + req.params.movieId});
-        }
-
+    let response;
+    try {
+        response = Movie.findOneAndRemove({'id': id});
         res.send({message: "Movie deleted successfully!"})
-    });
+    } catch(error) {
+        if (error.kind === 'ObjectId') {
+          return  res.status(404).send({message: `Movie not found with id: ${id}`});
+        }
+        res.status(500).send({message: `Error retrieving movie with id: ${id}`});
+    }
+  
 };

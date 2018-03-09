@@ -1,10 +1,10 @@
 {
   "name": "accedo-server",
   "version": "1.0.0",
-  "description": "Never miss a thing in Life. Take notes quickly. Organize and keep track of all your notes.",
+  "description": " Simplistic node crud to movies history.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
   "keywords": [
     "Express",
@@ -13,6 +13,10 @@
     "Mongoose",
     "Notes"
   ],
+  "engines": {
+    "node": "8.x",
+    "npm": "5.x"
+  },
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.2",

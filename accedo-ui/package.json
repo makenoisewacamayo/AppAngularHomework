@@ -12,6 +12,10 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "engines": {
+    "node": "8.x",
+    "npm": "5.x"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^5.2.0",
