@@ -1,10 +1,5 @@
 var Movie = require('../models/movie.model');
 
-function newMovie (body) {
-    return new Promise((resolve)=>{
-        resolve(new Movie(body));
-    })
-} 
 
 exports.create = async function (req, res) {
     const id = req.body.id;
@@ -12,7 +7,7 @@ exports.create = async function (req, res) {
         return res.status(400).send({message: "Movie Id cannot be empty"});
     }
     
-    var movie = await newMovie(req.body);
+    var movie = new Movie(req.body);
 
     let data;
     try {
@@ -66,7 +61,7 @@ exports.update = async function (req, res) {
 
     Object.keys(req.body)
         .map((key) => {
-            if ( movie.hasOwnProperty(key) && movie[key] !==  req.body[key]) {
+            if ( movie.hasOwnProperty(key) && !!req.body[key] && movie[key] !==  req.body[key]) {
                 movie[key] = req.body[key]
             }
             return key;
@@ -75,7 +70,7 @@ exports.update = async function (req, res) {
     let data;
     try {
         data = await movie.save();
-        es.send(data);
+        res.send(data);
     } catch(error) {
         res.status(500).send({message: `Could not update movie with id: ${id}`});
     }
