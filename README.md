@@ -1,3 +1,14 @@
+# Requirements
+
+* node version 8.x, strongly suggest 8.10
+* npm 5.x
+
+Can use node version manager (nvm for short) to get local envionment
+
+[Setup nvm](https://github.com/creationix/nvm/blob/master/README.md)
+
+
+
 # Running mongo local instance
 
 ## install docker
