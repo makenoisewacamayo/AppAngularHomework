@@ -3,6 +3,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { empty } from 'rxjs/observable/empty';
 import { tap } from 'rxjs/operators';
 import * as fromStore from '../../store';
 import * as fromActions from '../../store/actions/history.action';
@@ -31,10 +32,22 @@ export class PlayerComponent implements OnInit {
       this.content$ = of(movie.contents[0]);
     });
   }
+
+
   onPlay(event: MediaStreamEvent) {
     this.movie$.subscribe( (movie: Movie) => {
       this.store.dispatch(new fromActions.CreateHistory(movie));
     })
+  }
+
+  onAbort(event: MediaStreamEvent) {
+    console.log("---abort----");
+    console.log(event);
+  }
+
+  onError(event: MediaStreamErrorEvent) {
+    console.log("---error----");
+    console.log(event);
   }
 
 }

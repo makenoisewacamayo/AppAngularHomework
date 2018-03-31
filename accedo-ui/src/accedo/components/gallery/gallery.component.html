@@ -21,7 +21,7 @@
     <a routerLink="{{item.id}}" class="item-link" *ngIf="!!item.src">
       <div class="item" >
         <div>
-            <img [src]="item.src" [width]="item.width" [height]="item.height" [alt]="item.alt" importance="high" async />
+            <img [src]="item.src" [width]="item.width" [height]="item.height" [alt]="item.alt" importance="high" async crossorigin="use-credentials" />
             <span class="item-title" >{{item.title}}</span>
             <br>
         </div>

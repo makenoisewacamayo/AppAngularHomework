@@ -1,6 +1,6 @@
 <div class="video_container">
 <div  class="video-item" *ngIf="content$ | async as content; else loading" >
-  <video width="{{content.width}}" height="{{content.height}}" controls (play)="onPlay($event)">
+  <video id="{{content.id}}" width="{{content.width}}" height="{{content.height}}" controls (play)="onPlay($event)" (abort)="onAbort($event)" (error)="onError($event)">
     <source src="{{content.url}}" type="video/{{content.format}}">
   </video>
 </div>

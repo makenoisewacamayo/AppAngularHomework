@@ -22,7 +22,7 @@ exports.create = async function (req, res) {
 exports.findAll = async function (req, res) {
    let movies;
    try {
-      movies = await Movie.find();
+      movies = await Movie.find().exec();
       res.send(movies);
    } catch(err) {
      res.status(500).send({message: "Some error occurred while retrieving movies."});
@@ -82,10 +82,9 @@ exports.delete = async function (req, res) {
     if(!id) {
         return res.status(400).send({message: "Movie Id cannot be empty"});
     }
-
     let response;
     try {
-        response = await Movie.findOneAndRemove({'id': id});
+        response = await Movie.findOneAndRemove({'id': id}).exec();
         res.send({message: "Movie deleted successfully!"})
     } catch(error) {
         if (error.kind === 'ObjectId') {
